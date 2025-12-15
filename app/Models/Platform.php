@@ -9,7 +9,7 @@ class Platform extends Model
 {
     protected $fillable = ['name'];
 
-    public function streamer():HasMany{
+    public function streamers():HasMany{
         return $this->hasMany(Streamer::class);
     }
 }

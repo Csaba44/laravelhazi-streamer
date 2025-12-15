@@ -53,10 +53,36 @@ class GameController extends Controller
      */
     public function show(string $name)
     {
-        $game = Game::with("streamers")->where("name", "=", $name)->get();
+        $game = Game::where("name", "=", $name)->get();
+
 
         return response()->json($game, 200);
     }
+
+    public function show2(string $id)
+    {
+
+        $game = Game::where("id", "=", $id)->get();
+
+
+        return response()->json($game, 200);
+    }
+
+
+    public function index2()
+    {
+        $games = Game::orderBy('name', 'ASC')->get();
+
+        return response()->json($games, 200);
+    }
+
+        public function index3()
+    {
+        $games = Game::orderBy('release_date', 'ASC')->get();
+
+        return response()->json($games, 200);
+    }
+
 
     /**
      * Update the specified resource in storage.
