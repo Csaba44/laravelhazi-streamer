@@ -76,7 +76,7 @@ class GameController extends Controller
         return response()->json($games, 200);
     }
 
-        public function index3()
+    public function index3()
     {
         $games = Game::orderBy('release_date', 'ASC')->get();
 
@@ -91,12 +91,11 @@ class GameController extends Controller
     {
         $validated = $request->validate(
             [
-                "name" => "required|string|unique:games,name",
-                "genre_id" => "required|integer|exists:genres,id",
-                "release_date" => "required|date",
+                "name" => "sometimes|string|unique:games,name",
+                "genre_id" => "sometimes|integer|exists:genres,id",
+                "release_date" => "sometimes|date",
             ],
             [
-                "required" => ":attribute megadása szükséges.",
                 "string" => ":attribute mező szöveges kell legyen",
                 "unique" => ":attribute mező már létezik",
                 "integer" => ":attribute mezőnek szám értéknek kell lennie",

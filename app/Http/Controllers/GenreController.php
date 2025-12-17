@@ -53,16 +53,32 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Genre $genre)
     {
-        //
+        $validated = $request->validate(
+            [
+                "name" => "required|string"
+            ],
+            [
+                "required" => ":attribute megadása szükséges.",
+                "string" => ":attribute mező szöveges kell legyen"
+            ],
+            [
+                "name" => "A név"
+            ]
+        );
+
+        $genre->update($validated);
+
+        return response()->json(["message" => "A genre sikeresen módosítva."], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Genre $genre)
     {
-        //
+        $genre->delete();
+        return response()->json(["message" => "Genre sikeresen törölve"], 200);
     }
 }

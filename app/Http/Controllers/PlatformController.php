@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Platform;
 use Illuminate\Http\Request;
 
@@ -50,16 +51,32 @@ class PlatformController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Platform $platform)
     {
-        //
+        $validated = $request->validate(
+            [
+                "name" => "required|string"
+            ],
+            [
+                "required" => ":attribute megadása szükséges.",
+                "string" => ":attribute mező szöveges kell legyen"
+            ],
+            [
+                "name" => "A név"
+            ]
+        );
+
+        $platform->update($validated);
+
+        return response()->json(["message" => "A platform sikeresen módosítva."], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Platform $platform)
     {
-        //
+        $platform->delete();
+        return response()->json(["message" => "Platform sikeresen törölve"], 200);
     }
 }

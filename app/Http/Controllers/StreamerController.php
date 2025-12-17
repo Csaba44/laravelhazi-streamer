@@ -35,18 +35,18 @@ class StreamerController extends Controller
             [
                 "name" => "required|string|unique:streamers,name",
                 "platform" => "sometimes|exists:platforms,name",
-                "followers"=>"prohibited",
+                "followers" => "prohibited",
             ],
             [
                 "required" => ":attribute megadása szükséges.",
                 "string" => ":attribute mező szöveges kell legyen",
                 "unique" => ":attribute mező már létezik",
-                "prohibited"=>":attribute mező nem adható meg",
+                "prohibited" => ":attribute mező nem adható meg",
             ],
             [
                 "name" => "A streamer név",
-                "platform"=>"A platform név",
-                "followers"=>"A követők száma",
+                "platform" => "A platform név",
+                "followers" => "A követők száma",
             ]
         );
 
@@ -64,16 +64,32 @@ class StreamerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Streamer $streamer)
     {
-        //
+        $validated = $request->validate(
+            ["followers" => "required|integer|min:0"],
+            [
+                "required" => ":attribute megadása szükséges.",
+                "integer" => ":attribute mező szám érték kell legyen",
+                "min" => ":attribute mező minimum értéke :min"
+            ],
+            [
+                "followers" => "A követők"
+            ]
+        );
+
+        $streamer->update($validated);
+
+        return response()->json(["message" => "A streamer sikeresen módosítva."], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Streamer $streamer)
     {
-        //
+        
+        $streamer->delete();
+        return response()->json(["message" => "Streamer sikeresen törölve"], 200);
     }
 }

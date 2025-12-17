@@ -30,6 +30,12 @@ Route::post("/new/game", [GameController::class, 'store']);
 Route::post("/new/streamer",[StreamerController::class,'store']);
 Route::post("/new/stream",[StreamController::class,'store']);
 
+Route::put("/update/platform/{platform}", [PlatformController::class, 'update']);
+Route::put("/update/genre/{genre}", [GenreController::class, 'update']);
+Route::put("/update/game/{game}", [GameController::class, 'update']);
+Route::put("/update/streamer/{streamer}", [StreamerController::class, 'update']);
 
-Route::put("/games/{game}", [GameController::class, 'update']);
-Route::delete("/games/{game}", [GameController::class, 'destroy']);
+Route::delete("/delete/platform/{platform}", [PlatformController::class, 'destroy']);
+Route::delete("/delete/genre/{genre}", [GenreController::class, 'destroy']);
+Route::delete("/delete/game/{game}", [GameController::class, 'destroy']);
+Route::delete("/delete/streamer/{streamer}", [StreamerController::class, 'destroy']);
